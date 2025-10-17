@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voyage Aid AI | Planner</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav>
+    <h2 class="logo">Voyage Aid AI</h2>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="auth.html">Logout</a>
+    </div>
+  </nav>
+
+  <section class="planner-container">
+    <div class="card">
+      <h2>Plan Your Journey</h2>
+
+      <label>Choose Your City:</label>
+      <select id="city">
+        <option value="">Select a city</option>
+        <option value="paris">Paris</option>
+        <option value="tokyo">Tokyo</option>
+        <option value="delhi">Delhi</option>
+      </select>
+
+      <label>Trip Duration:</label>
+      <select id="duration">
+        <option value="half-day">Half Day</option>
+        <option value="1-day">1 Day</option>
+        <option value="2-days">2 Days</option>
+        <option value="3-5-days">3–5 Days</option>
+        <option value="1-week">1 Week</option>
+      </select>
+
+      <label>Your Interests:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" value="history"> History</label>
+        <label><input type="checkbox" value="food"> Food</label>
+        <label><input type="checkbox" value="adventure"> Adventure</label>
+        <label><input type="checkbox" value="shopping"> Shopping</label>
+        <label><input type="checkbox" value="culture"> Culture</label>
+      </div>
+
+      <label><input type="checkbox" id="snack"> Include Snack Breaks</label>
+
+      <button class="btn-primary" onclick="generateItinerary()">Generate Itinerary</button>
+    </div>
+  </section>
+
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+  <script src="js/planner.js"></script>
+</body>
+</html>
