@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #A8E6CF, #DCE3FF);
+  color: #333;
+  overflow-x: hidden;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-weight: 700;
+  color: #333;
+}
+
+.nav-links a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.btn, .btn-primary {
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  color: white;
+  background-color: #FFAAA5;
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #FFD3B6;
+  color: #333;
+}
+
+.hero {
+  text-align: center;
+  padding: 120px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 25px;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.auth-container, .planner-container, .itinerary-container {
+  padding: 100px 20px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.checkbox-group label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.6;
+  animation: float 10s infinite ease-in-out;
+}
+
+.blob1 { width: 300px; height: 300px; background: #FFAAA5; top: 10%; left: -10%; }
+.blob2 { width: 250px; height: 250px; background: #A8E6CF; bottom: 10%; right: -10%; }
+.blob3 { width: 200px; height: 200px; background: #FFD3B6; top: 60%; left: 40%; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
