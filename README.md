@@ -73,12 +73,13 @@ It leverages **AI**, **Google Maps**, and **YouTube** to curate smart, efficient
 ## 🏆 Project for Viksit Bharat Buildathon 2025  
 
 Developed by  -
-**Kushagra Aggarwal**
-**Prema Swati Ekka**
-**Sharman Kumar**
-**Neel**
-**Ashi**
-High School Student, Delhi  
+- **Kushagra Aggarwal**
+- **Prema Swati Ekka**
+- **Sharman Kumar**
+- **Neel**
+- **Ashi**
+
+High School Students, Delhi  
 Aiming to make **AI-driven travel planning accessible and efficient** for everyone, without spending a penny!
 
 ---
