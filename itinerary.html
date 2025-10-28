@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voyage Aid AI | Itinerary</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Voyage Aid AI — Itinerary</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* minimal local styles to ensure itinerary looks good even if css/style.css differs */
+    .itinerary-container { padding: 36px; max-width: 900px; margin: 24px auto; }
+    #itinerary-body .card { margin: 12px 0; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.6); }
+    .it-top { display:flex; gap:12px; align-items:center; }
+    .it-time { width:70px; font-weight:700; color:#333; }
+    .it-title { margin:0; font-size:18px; color:#111; }
+    .it-links a, .it-links button { margin-right:8px; }
+    .controls { display:flex; gap:10px; margin-top:12px; }
+  </style>
 </head>
 <body>
   <nav>
@@ -15,19 +25,85 @@
     </div>
   </nav>
 
-  <section class="itinerary-container">
-    <div class="card" id="itinerary">
-      <h2>Your AI-Curated Itinerary</h2>
-      <p>Loading your adventure...</p>
+  <main class="itinerary-container">
+    <h1>Your AI-Curated Itinerary</h1>
+
+    <div style="margin-bottom:12px;">
+      Logged in as: <span class="current-user-email"></span>
+      <button onclick="logout()" style="margin-left:12px;">Logout</button>
     </div>
 
-    <button class="btn-primary" onclick="sendToEmail()">Send to My Email</button>
-  </section>
+    <!-- Controls -->
+    <div class="controls">
+      <input id="city-input" placeholder="Enter city (e.g., Paris)" style="flex:1;padding:8px;border-radius:8px;border:1px solid #ccc" />
+      <select id="duration-select" class="duration-select"></select>
+      <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="snack-checkbox" class="snack-checkbox" /> Include snacks</label>
+      <button class="btn-primary" onclick="startGenerate()">Generate</button>
+    </div>
 
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
+    <!-- Itinerary body -->
+    <div id="itinerary-body" style="margin-top:18px;">
+      <p>Use the controls above to generate an itinerary. The AI will create a day plan; you may skip stops or send the full plan to your account email.</p>
+    </div>
 
+    <div style="margin-top:16px;">
+      <button class="btn" onclick="sendItineraryToMyEmail()">Send to my email</button>
+    </div>
+
+    <div id="map-output" style="margin-top:18px;"></div>
+  </main>
+
+  <!-- Leaflet for optional map rendering (pure client, free) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <!-- app scripts -->
+  <script src="js/map.js"></script>
   <script src="js/itinerary.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+
+  <script>
+    // small binding helper used by the Generate button
+    function startGenerate() {
+      const city = document.getElementById("city-input").value.trim();
+      const durationLabel = document.getElementById("duration-select").value;
+      const interests = []; // optional: read from page if you have interest checkboxes
+      const includeSnacks = document.getElementById("snack-checkbox").checked;
+      if (!city) return alert("Enter a city to generate an itinerary.");
+      generateAndShowItinerary(city, durationLabel, interests, includeSnacks);
+      // also attempt to populate map output: geocode + show map link
+      geocodePlace(city).then(c=>{
+        if (!c) return;
+        const coords = [parseFloat(c.lat), parseFloat(c.lon)];
+        // inject a simple Leaflet map
+        const mapDivId = "leaflet-mini-map";
+        // remove old map if any
+        const old = document.getElementById(mapDivId);
+        if (old) old.remove();
+        const d = document.createElement("div");
+        d.id = mapDivId; d.style.height = "320px"; d.style.marginTop = "10px";
+        document.getElementById("map-output").appendChild(d);
+        const map = L.map(mapDivId).setView(coords, 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        L.marker(coords).addTo(map).bindPopup(c.name || city).openPopup();
+      }).catch(()=>{});
+    }
+
+    // set current user email in page
+    document.addEventListener("DOMContentLoaded", () => {
+      const cu = localStorage.getItem("voyage_current");
+      if (cu) document.querySelectorAll(".current-user-email").forEach(el => el.textContent = cu);
+      // initialize duration dropdowns from main.js binding
+      // bind snack checkbox ID expected by main.js
+      const snack = document.getElementById("snack-checkbox");
+      snack.classList.add("snack-checkbox");
+    });
+  </script>
 </body>
 </html>
