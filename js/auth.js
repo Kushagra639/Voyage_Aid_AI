@@ -1,16 +1,26 @@
-function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (email && password) {
-    localStorage.setItem("voyageEmail", email);
-    alert("Login successful!");
-    window.location.href = "planner.html";
-  } else {
-    alert("Please fill in both fields.");
-  }
+// auth.js
+function register(email, password) {
+  const users = JSON.parse(localStorage.getItem("users") || "[]");
+  if (users.find(u => u.email === email)) return alert("⚠️ Email already registered!");
+  users.push({ email, password: btoa(password) });
+  localStorage.setItem("users", JSON.stringify(users));
+  alert("✅ Account created successfully!");
 }
 
-function toggleSignup() {
-  alert("Signup feature can reuse same form. Just enter new credentials!");
+function login(email, password) {
+  const users = JSON.parse(localStorage.getItem("users") || "[]");
+  const user = users.find(u => u.email === email && u.password === btoa(password));
+  if (!user) return alert("❌ Invalid credentials!");
+  localStorage.setItem("currentUser", email);
+  window.location.href = "/itinerary"; // redirect page slug
+}
+
+function getCurrentUser() {
+  return localStorage.getItem("currentUser");
+}
+
+function logout() {
+  localStorage.removeItem("currentUser");
+  alert("Logged out!");
+  window.location.href = "/login";
 }
