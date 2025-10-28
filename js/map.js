@@ -12,7 +12,7 @@ async function getRoute(startPlace, endPlace) {
   const end = await getCoordinates(endPlace);
 
   const res = await fetch(
-    `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_API_KEY}&start=${start.lon},${start.lat}&end=${end.lon},${end.lat}`
+    `https://api.openrouteservice.org/v2/directions/driving-car?api_key=$eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImZmMTRiY2U5MGVmNDRmODA5ZjRjNzY3MjQ0OTE1NTgyIiwiaCI6Im11cm11cjY0In0=&start=${start.lon},${start.lat}&end=${end.lon},${end.lat}`
   );
   const data = await res.json();
   const summary = data.features[0].properties.summary;
