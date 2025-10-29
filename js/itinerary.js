@@ -22,42 +22,45 @@ initEmailJS();
 // Make sure to create your key at https://openrouter.ai/settings/keys
 
 const OPENROUTER_API_KEY = "YOUR_KEY_HERE";
+// Generates plain-text itinerary from OpenRouter
 async function generateItinerary(city, days, preferences) {
+  // days is expected as readable text: "2 days" or "1 day" etc.
   try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    const model = "mistralai/mistral-7b-instruct"; // reliable free instruction model
+    const payload = {
+      model,
+      messages: [
+        { role: "system", content: "You are Voyage Aid AI — a helpful travel planner. Output either (A) a strict JSON array of stops OR (B) readable text. If you output JSON, return only JSON. Each stop fields: time, name, type, duration_minutes, notes, maps_query, youtube." },
+        { role: "user", content: `Create a ${days} itinerary for ${city} focusing on ${preferences.length? preferences.join(", "): "general"}. Include breakfast, lunch, dinner, travel times, hidden gems, and underrated places. Prefer concise, structured output. If possible, return a JSON array.` }
+      ],
+      max_tokens: 800,
+      temperature: 0.7
+    };
+
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        model: "nvidia/nemotron-nano-12b-v2-vl:free",
-        messages: [
-          {
-            role: "system",
-            content: "You are Voyage Aid AI — an expert trip planner that makes efficient, creative itineraries."
-          },
-          {
-            role: "user",
-            content: `Create a ${days}-day detailed travel itinerary for ${city}, focusing on ${preferences.join(", ")}. Include breakfast, lunch, dinner, travel times, hidden gems, and underrated places.`
-          }
-        ]
-      })
+      body: JSON.stringify(payload)
     });
 
-    const data = await response.json();
-    if (data?.choices?.[0]?.message?.content) {
-      return data.choices[0].message.content;
-    } else {
-      console.warn("Fallback triggered:", data);
-      return demoItinerary(); // fallback in case API fails
+    const data = await res.json();
+    console.log("OpenRouter response:", data); // <-- IMPORTANT: inspect this in browser console
+
+    // OpenRouter typical path: data.choices[0].message.content
+    const content = data?.choices?.[0]?.message?.content || data?.choices?.[0]?.text || (typeof data === 'string' ? data : null);
+    if (!content) {
+      console.warn("OpenRouter returned no content. See console for 'OpenRouter response'.");
+      return null;
     }
+    return content;
   } catch (err) {
-    console.error("AI generation error:", err);
-    return demoItinerary();
+    console.error("generateItinerary (OpenRouter) error:", err);
+    return null;
   }
 }
-
 
 // build prompt to get JSON array output
 function buildPrompt(city, duration, interests, includeSnacks) {
@@ -102,36 +105,56 @@ function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','
 // primary function called by itinerary.html
 async function generateAndShowItinerary(city, duration, interests, includeSnacks) {
   try {
-    // Build AI prompt using OpenRouter
+    // Build prompt & call OpenRouter generator
     const aiText = await generateItinerary(city, duration, interests);
-
-    // Try parsing AI response as structured text
-    let itinerary = [];
-    try {
-      itinerary = JSON.parse(aiText);
-    } catch {
-      // Fallback to generic parsing
-      itinerary = [
+    if (!aiText) {
+      console.warn("AI returned empty — using fallback.");
+      const fallback = [
         { "time": "08:00", "name": "Breakfast at local cafe", "notes": "Try local specialty", "maps_query": `${city} cafe` },
         { "time": "09:30", "name": "Main attraction", "notes": "Explore must-see spots" },
         { "time": "13:00", "name": "Lunch at recommended place", "notes": "Local cuisine" },
         { "time": "15:00", "name": "Hidden gem", "notes": "Underrated spot" },
         { "time": "19:00", "name": "Dinner", "notes": "End your day with great food" }
       ];
+      renderItinerary(fallback);
+      localStorage.setItem('voyage_last_itinerary', JSON.stringify(fallback));
+      return;
     }
 
-    // Render the itinerary
-    renderItinerary(itinerary);
+    // If AI returned JSON string, parse; otherwise show raw text nicely
+    let parsed = null;
+    // try to find JSON block inside the AI text
+    const start = aiText.indexOf('['), end = aiText.lastIndexOf(']');
+    if (start !== -1 && end !== -1 && end > start) {
+      const jsonStr = aiText.slice(start, end+1);
+      try {
+        parsed = JSON.parse(jsonStr);
+      } catch (e) {
+        console.warn("Failed to JSON.parse AI JSON block:", e);
+        parsed = null;
+      }
+    }
 
-    // Save for email export
-    localStorage.setItem('voyage_last_itinerary', JSON.stringify(itinerary));
-    console.log("✅ Itinerary generated and displayed successfully.");
+    if (Array.isArray(parsed)) {
+      renderItinerary(parsed);
+      localStorage.setItem('voyage_last_itinerary', JSON.stringify(parsed));
+      console.log("Rendered AI JSON itinerary.");
+      return;
+    }
 
+    // If parsed not available, still attempt to split the plain text into simple stops (best-effort)
+    // Show raw AI output (readable)
+    const container = document.getElementById('itinerary-body');
+    container.innerHTML = `<pre style="white-space:pre-wrap">${escapeHtml(aiText)}</pre>`;
+    // also save raw text
+    localStorage.setItem('voyage_last_itinerary', JSON.stringify({ raw: aiText }));
+    console.log("Rendered AI plain text itinerary.");
   } catch (error) {
-    console.error("Error generating itinerary:", error);
-    alert("Failed to generate itinerary. Please try again later.");
+    console.error("Error in generateAndShowItinerary:", error);
+    alert("Failed to generate itinerary. Check console for errors.");
   }
 }
+
 
 // send itinerary via EmailJS to logged-in user
 function sendItineraryToMyEmail() {
