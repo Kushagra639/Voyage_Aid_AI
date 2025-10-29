@@ -5,6 +5,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
+body {
+  background: linear-gradient(135deg, #e0f7fa, #fce4ec, #f3e5f5);
+  background-attachment: fixed;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  backdrop-filter: blur(8px);
+}
+
 :root{
   --bg1: #f7fbff;
   --accent1: linear-gradient(135deg,#FFD3B6 0%, #A8E6CF 50%, #DCE3FF 100%);
