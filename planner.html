@@ -1,60 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voyage Aid AI | Planner</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Voyage Aid AI — Planner</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <nav>
-    <h2 class="logo">Voyage Aid AI</h2>
-    <div class="nav-links">
+  <header class="nav">
+    <div class="brand">Voyage Aid AI</div>
+    <nav class="nav-links">
       <a href="index.html">Home</a>
-      <a href="auth.html">Logout</a>
-    </div>
-  </nav>
+      <a href="itinerary.html">My Itinerary</a>
+      <a id="auth-link" href="login.html">Login</a>
+    </nav>
+  </header>
 
-  <section class="planner-container">
-    <div class="card">
+  <main class="container">
+    <section class="card planner-card">
       <h2>Plan Your Journey</h2>
 
-      <label>Choose Your City:</label>
-      <select id="city">
-        <option value="">Select a city</option>
-        <option value="paris">Paris</option>
-        <option value="tokyo">Tokyo</option>
-        <option value="delhi">Delhi</option>
-      </select>
+      <label class="field">
+        <span>Select city</span>
+        <input id="city" list="city-list" placeholder="Paris, Tokyo, Delhi..." />
+        <datalist id="city-list">
+          <option value="Paris"></option>
+          <option value="Tokyo"></option>
+          <option value="Delhi"></option>
+        </datalist>
+      </label>
 
-      <label>Trip Duration:</label>
-      <select id="duration">
-        <option value="half-day">Half Day</option>
-        <option value="1-day">1 Day</option>
-        <option value="2-days">2 Days</option>
-        <option value="3-5-days">3–5 Days</option>
-        <option value="1-week">1 Week</option>
-      </select>
+      <label class="field">
+        <span>Duration</span>
+        <select id="duration" class="duration-select"></select>
+      </label>
 
-      <label>Your Interests:</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" value="history"> History</label>
-        <label><input type="checkbox" value="food"> Food</label>
-        <label><input type="checkbox" value="adventure"> Adventure</label>
-        <label><input type="checkbox" value="shopping"> Shopping</label>
-        <label><input type="checkbox" value="culture"> Culture</label>
+      <div class="field">
+        <span>Your interests</span>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" value="history" class="fancy-checkbox" /> History</label>
+          <label class="chip"><input type="checkbox" value="food" class="fancy-checkbox" /> Food</label>
+          <label class="chip"><input type="checkbox" value="adventure" class="fancy-checkbox" /> Adventure</label>
+          <label class="chip"><input type="checkbox" value="shopping" class="fancy-checkbox" /> Shopping</label>
+          <label class="chip"><input type="checkbox" value="culture" class="fancy-checkbox" /> Culture</label>
+        </div>
       </div>
 
-      <label><input type="checkbox" id="snack"> Include Snack Breaks</label>
+      <div class="field row">
+        <label class="switch">
+          <input id="snack" type="checkbox" />
+          <span class="slider"></span>
+        </label>
+        <div style="margin-left:12px"><strong>Include optional snack breaks</strong><div class="muted">Breakfast, lunch & dinner are always included</div></div>
+      </div>
 
-      <button class="btn-primary" onclick="generateItinerary()">Generate Itinerary</button>
-    </div>
-  </section>
+      <div style="margin-top:18px;">
+        <button class="btn-primary" id="generate-btn">Generate Itinerary</button>
+      </div>
+    </section>
+  </main>
 
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Enforce login before generating
+    document.getElementById('generate-btn').addEventListener('click', ()=> {
+      const user = getCurrentUserEmail();
+      if (!user) {
+        if (confirm("You need to be logged in to generate an itinerary. Go to login?")) {
+          window.location.href = "login.html";
+        }
+        return;
+      }
+      // collect inputs
+      const city = document.getElementById('city').value.trim();
+      const duration = document.getElementById('duration').value;
+      const interests = Array.from(document.querySelectorAll('.chips input[type="checkbox"]:checked')).map(i=>i.value);
+      const snacks = document.getElementById('snack').checked;
+      // save trip data and redirect to itinerary page
+      localStorage.setItem('voyage_trip', JSON.stringify({city,duration,interests,snacks}));
+      window.location.href = "itinerary.html";
+    });
 
-  <script src="js/planner.js"></script>
+    // update auth link text
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const user = getCurrentUserEmail();
+      const authLink = document.getElementById('auth-link');
+      if (user) { authLink.textContent = 'My Account'; authLink.href = 'itinerary.html'; }
+    });
+  </script>
 </body>
 </html>
