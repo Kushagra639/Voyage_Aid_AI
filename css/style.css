@@ -27,7 +27,7 @@ body {
 }
 
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg1);color:#0f1724;}
+html,body{height:100%;margin:0;color:#0f1724;}
 
 /* NAV */
 .nav{
@@ -103,4 +103,69 @@ input[type="text"],input[type="email"],input[type="password"],select{
   .hero-card{padding:24px}
   .nav{padding:12px}
   .it-top{flex-direction:column;align-items:flex-start}
+}
+
+/* Markdown formatting */
+.markdown {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+.markdown h3 {
+  margin-top: 1.4em;
+  color: #1e293b;
+}
+.markdown ul {
+  margin-left: 1.2em;
+  padding-left: 1em;
+}
+.markdown a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+.markdown a:hover {
+  text-decoration: underline;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto;
+  color: #444;
+  font-size: 1rem;
+}
+
+.spinner {
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top: 3px solid #0077ff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.markdown {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+}
+.markdown h1, .markdown h2, .markdown h3 {
+  margin-top: 1em;
+  color: #1e293b;
+}
+.markdown ul {
+  margin-left: 1.5em;
+}
+.markdown a {
+  color: #0077ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.markdown a:hover {
+  text-decoration: underline;
 }
