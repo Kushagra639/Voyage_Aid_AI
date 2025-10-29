@@ -68,7 +68,7 @@
   <script src="js/main.js"></script>
   <script>
     // Enforce login before generating
-    document.getElementById('generate-btn').addEventListener('click', ()=> {
+      document.getElementById('generate-btn').addEventListener('click', ()=> {
       const user = getCurrentUserEmail();
       if (!user) {
         if (confirm("You need to be logged in to generate an itinerary. Go to login?")) {
