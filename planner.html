@@ -79,7 +79,17 @@
       }
       // collect inputs
       const city = document.getElementById('city').value.trim();
-      const duration = document.getElementById('duration').value;
+      const rawDuration = document.getElementById('duration').value;
+      // normalize duration values to human readable (AI likes "2 days" not "2d")
+      const durationMap = {
+        '3h': '3 hours',
+        '6h': '6 hours',
+        '1d': '1 day',
+        '2d': '2 days',
+        '3-5d': '3-5 days',
+        '1w': '7 days'
+      };
+      const duration = durationMap[rawDuration] || rawDuration;
       const interests = Array.from(document.querySelectorAll('.chips input[type="checkbox"]:checked')).map(i=>i.value);
       const snacks = document.getElementById('snack').checked;
       // save trip data and redirect to itinerary page
