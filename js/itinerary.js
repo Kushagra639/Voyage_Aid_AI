@@ -145,7 +145,28 @@ async function generateAndShowItinerary(city, duration, interests, includeSnacks
     // If parsed not available, still attempt to split the plain text into simple stops (best-effort)
     // Show raw AI output (readable)
     const container = document.getElementById('itinerary-body');
-    container.innerHTML = `<pre style="white-space:pre-wrap">${escapeHtml(aiText)}</pre>`;
+    // --- Convert markdown-ish AI text into readable HTML ---
+    function markdownToHtml(md) {
+      return md
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+        .replace(/`(.*?)`/gim, '<code>$1</code>')
+        .replace(/^- (.*$)/gim, '<li>$1</li>')
+        .replace(/\n<li>/gim, '<ul><li>').replace(/<\/li>\n(?!<li>)/gim, '</li></ul>')
+        .replace(/\n/gim, '<br>')
+        .replace(
+          /Maps Query:?["“”']?([^"“”'\n]+)["“”']?/gi,
+          '<a href="https://www.google.com/maps/search/$1" target="_blank">🗺️ $1</a>'
+        )
+        .replace(
+          /YouTube:?["“”']?([^"“”'\n]+)["“”']?/gi,
+          '<a href="https://www.youtube.com/results?search_query=$1" target="_blank">▶️ $1</a>'
+        );
+    }
+    container.innerHTML = `<div class="markdown">${markdownToHtml(aiText)}</div>`;
     // also save raw text
     localStorage.setItem('voyage_last_itinerary', JSON.stringify({ raw: aiText }));
     console.log("Rendered AI plain text itinerary.");
