@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Voyage Aid AI — Sign up</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="brand">Voyage Aid AI</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <main class="auth-page">
+    <div class="card auth-card">
+      <h2>Create account</h2>
+      <label class="field">
+        <span>Email</span>
+        <input id="su-email" type="email" placeholder="you@example.com" />
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input id="su-pass" type="password" placeholder="Choose a secure password" />
+      </label>
+      <button class="btn-primary" id="signup-btn">Sign up</button>
+      <p class="muted">Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('signup-btn').addEventListener('click', ()=>{
+      const e = document.getElementById('su-email').value.trim();
+      const p = document.getElementById('su-pass').value;
+      register(e,p);
+    });
+  </script>
+</body>
+</html>
