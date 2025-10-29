@@ -46,7 +46,7 @@ It leverages **AI**, **Google Maps**, and **YouTube** to curate smart, efficient
 | **AI Engine** | OpenRouter API |
 | **Maps & Routes** | Open Route Service + OpenTrip Map |
 | **Email Sending** | EmailJS |
-| **Hosting** | [voyage-aid-ai.ct.ws](voyage-aid-ai.ct.ws) |
+| **Hosting** | [voyage-aid-ai.w3spaces.com](voyage-aid-ai.w3spaces.com) |
 
 ---
 
