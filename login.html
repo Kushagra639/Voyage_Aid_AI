@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Voyage Aid AI — Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="brand">Voyage Aid AI</div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="signup.html">Sign up</a>
+    </nav>
+  </header>
+
+  <main class="auth-page">
+    <div class="card auth-card">
+      <h2>Welcome back</h2>
+      <label class="field">
+        <span>Email</span>
+        <input id="li-email" type="email" placeholder="your@email.com" />
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input id="li-pass" type="password" placeholder="Password" />
+      </label>
+      <button class="btn-primary" id="login-btn">Login</button>
+      <p class="muted">New here? <a href="signup.html">Create an account</a></p>
+    </div>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById('login-btn').addEventListener('click', ()=>{
+      const e = document.getElementById('li-email').value.trim();
+      const p = document.getElementById('li-pass').value;
+      login(e,p);
+    });
+  </script>
+</body>
+</html>
