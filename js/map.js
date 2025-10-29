@@ -5,8 +5,8 @@
 //
 // Replace the placeholders below with your keys.
 
-const OPENTRIPMAP_KEY = "5ae2e3f221c38a28845f05b6a7b62981aaaf6c160b76a9973719086c"; // <-- paste your OpenTripMap key here
-const ORS_API_KEY = "eyJvcmciOil1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImZmMTRİY2U5MGVmNDRmODA5ZjRjNzY3MjQ0OTE1NTgyliwiaCI6Im11cm11cjY0In0=";         // <-- paste your OpenRouteService key here
+const OPENTRIPMAP_KEY = "OpenTripMap_Key"; // <-- paste your OpenTripMap key here
+const ORS_API_KEY = "ORS_API_Key=";         // <-- paste your OpenRouteService key here
 
 // Geocoding via OpenTripMap geocoding endpoint (no extra signup needed for small calls)
 async function geocodePlace(placeName) {
