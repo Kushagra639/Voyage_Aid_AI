@@ -3,7 +3,6 @@
 // Also initializes EmailJS for sending the itinerary to current user.
 // Replace the placeholders below with your keys.
 
-const HF_API_KEY = "REPLACE_HF_API_KEY";               // Hugging Face token
 const EMAILJS_PUBLIC_KEY = "REPLACE_EMAILJS_PUBLIC";  // EmailJS public key
 const EMAILJS_SERVICE_ID = "REPLACE_EMAILJS_SERVICE"; // EmailJS service id (e.g., voyage_aid_ai)
 const EMAILJS_TEMPLATE_ID = "REPLACE_EMAILJS_TEMPLATE"; // EmailJS template id
@@ -18,29 +17,47 @@ function initEmailJS() {
 }
 initEmailJS();
 
-// small helper to call Hugging Face text generation (model can be updated by you)
-async function callHF(prompt) {
-  if (!HF_API_KEY || HF_API_KEY.startsWith('REPLACE')) {
-    console.warn("HF key missing — using fallback itinerary.");
-    return null;
+
+// --- New OpenRouter API version ---
+// Make sure to create your key at https://openrouter.ai/settings/keys
+
+const OPENROUTER_API_KEY = "YOUR_KEY_HERE";
+async function generateItinerary(city, days, preferences) {
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "nvidia/nemotron-nano-12b-v2-vl:free",
+        messages: [
+          {
+            role: "system",
+            content: "You are Voyage Aid AI — an expert trip planner that makes efficient, creative itineraries."
+          },
+          {
+            role: "user",
+            content: `Create a ${days}-day detailed travel itinerary for ${city}, focusing on ${preferences.join(", ")}. Include breakfast, lunch, dinner, travel times, hidden gems, and underrated places.`
+          }
+        ]
+      })
+    });
+
+    const data = await response.json();
+    if (data?.choices?.[0]?.message?.content) {
+      return data.choices[0].message.content;
+    } else {
+      console.warn("Fallback triggered:", data);
+      return demoItinerary(); // fallback in case API fails
+    }
+  } catch (err) {
+    console.error("AI generation error:", err);
+    return demoItinerary();
   }
-  const model = "gpt2"; // replace with a better model on HF if available (or a small chat model)
-  const res = await fetch(`https://router.huggingface.co/hf-inference/models/${model}`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${HF_API_KEY}`, 'Content-Type':'application/json' },
-    body: JSON.stringify({ inputs: prompt, options:{wait_for_model:true} })
-  });
-  if (!res.ok) {
-    console.error("HF error", await res.text());
-    return null;
-  }
-  const json = await res.json();
-  const txt = Array.isArray(json) && json[0]?.generated_text ? json[0].generated_text : (json.generated_text || JSON.stringify(json));
-  // attempt to extract JSON itinerary array from output
-  const start = txt.indexOf('['), end = txt.lastIndexOf(']');
-  if (start===-1 || end===-1) return { raw: txt };
-  try { return JSON.parse(txt.slice(start, end+1)); } catch(e){ return { raw: txt }; }
 }
+
 
 // build prompt to get JSON array output
 function buildPrompt(city, duration, interests, includeSnacks) {
@@ -84,29 +101,36 @@ function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','
 
 // primary function called by itinerary.html
 async function generateAndShowItinerary(city, duration, interests, includeSnacks) {
-  // geocode
-  const geo = await geocodePlace(city).catch(()=>null);
-  const lat = geo?.lat, lon = geo?.lon;
-  // get POIs
-  const pois = (lat && lon) ? await getPOIs(lat, lon, 3000, 6).catch(()=>[]) : [];
-  // build prompt and call HF
-  const prompt = buildPrompt(city, duration, interests, includeSnacks);
-  let hfResp = await callHF(prompt);
-  let itinerary;
-  if (!hfResp) {
-    // fallback demo
-    itinerary = [
-      {"time":"08:00","name":"Breakfast at local cafe","type":"meal","duration_minutes":45,"notes":"Try local specialty","maps_query":`${city} cafe`,"youtube":""},
-      {"time":"09:30","name":(pois[0]?.name||"City Museum"),"type":"place","duration_minutes":90,"notes":"Main attraction","maps_query":pois[0]?.name||"City museum","youtube":""},
-      {"time":"13:00","name":"Lunch at recommended place","type":"meal","duration_minutes":60,"notes":"Local cuisine","maps_query":`${city} restaurant`,"youtube":""},
-      {"time":"15:00","name":(pois[1]?.name||"Hidden gem"),"type":"place","duration_minutes":90,"notes":"Underrated spot","maps_query":pois[1]?.name||"Hidden spot","youtube":""},
-      {"time":"19:00","name":"Dinner","type":"meal","duration_minutes":90,"notes":"","maps_query":`${city} restaurant`,"youtube":""}
-    ];
-  } else {
-    itinerary = hfResp;
+  try {
+    // Build AI prompt using OpenRouter
+    const aiText = await generateItinerary(city, duration, interests);
+
+    // Try parsing AI response as structured text
+    let itinerary = [];
+    try {
+      itinerary = JSON.parse(aiText);
+    } catch {
+      // Fallback to generic parsing
+      itinerary = [
+        { "time": "08:00", "name": "Breakfast at local cafe", "notes": "Try local specialty", "maps_query": `${city} cafe` },
+        { "time": "09:30", "name": "Main attraction", "notes": "Explore must-see spots" },
+        { "time": "13:00", "name": "Lunch at recommended place", "notes": "Local cuisine" },
+        { "time": "15:00", "name": "Hidden gem", "notes": "Underrated spot" },
+        { "time": "19:00", "name": "Dinner", "notes": "End your day with great food" }
+      ];
+    }
+
+    // Render the itinerary
+    renderItinerary(itinerary);
+
+    // Save for email export
+    localStorage.setItem('voyage_last_itinerary', JSON.stringify(itinerary));
+    console.log("✅ Itinerary generated and displayed successfully.");
+
+  } catch (error) {
+    console.error("Error generating itinerary:", error);
+    alert("Failed to generate itinerary. Please try again later.");
   }
-  renderItinerary(itinerary);
-  localStorage.setItem('voyage_last_itinerary', JSON.stringify(itinerary));
 }
 
 // send itinerary via EmailJS to logged-in user
