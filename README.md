@@ -43,22 +43,20 @@ It leverages **AI**, **Google Maps**, and **YouTube** to curate smart, efficient
 |-------|-------------|
 | **Frontend** | HTML, CSS, JavaScript |
 | **Styling** | CSS3, Pastel Gradients, Glassmorphism |
-| **Backend (Optional)** | Firebase Firestore (for account data) |
-| **AI Engine** | OpenAI GPT-4-mini / Hugging Face Inference API |
-| **Maps & Routes** | Google Maps + Directions API |
+| **AI Engine** | OpenRouter API |
+| **Maps & Routes** | Open Route Service + OpenTrip Map |
 | **Email Sending** | EmailJS |
-| **Hosting** | [Your Live Deployed Link Here]() |
+| **Hosting** | [voyage-aid-ai.ct.ws](voyage-aid-ai.ct.ws) |
 
 ---
 
 ## 🔑 APIs Used  
 
-| Purpose | API | Free Tier Info |
-|----------|-----|----------------|
-| Maps & Routes | [Google Maps API](https://developers.google.com/maps/documentation) | 28,000 free requests/month |
-| Video Content | [YouTube Data API v3](https://developers.google.com/youtube/v3) | 10,000 free requests/day |
-| Email Sending | [EmailJS](https://www.emailjs.com/) | Free 200 emails/month |
-| AI Text Generation | [Hugging Face Inference API](https://huggingface.co/inference-api) or [OpenAI GPT-mini](https://platform.openai.com/docs) | Free with API key |
+| Purpose | API |
+|----------|-----|
+| Maps & Routes | [OpenTrip Map] and [Open Route Service] |
+| Email Sending | [EmailJS](https://www.emailjs.com/) |
+| AI Text Generation | [OpenRouter](https://www.openrouter.ai/) |
 
 ---
 
@@ -86,7 +84,11 @@ Aiming to make **AI-driven travel planning accessible and efficient** for everyo
 
 ## 📸 Preview  
   
-``    
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3d0835b3-bff7-474d-a881-ef8960865d27" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ed5bb0ea-4f52-4d48-a5ab-b0c90aea477c" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e7ce818f-84fa-46f2-a603-ab27ab3840d4" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5ae6b551-01a0-4f9e-b499-d0717bdf8bb7" />
+    
 
 ---
 
