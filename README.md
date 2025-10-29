@@ -88,6 +88,7 @@ Aiming to make **AI-driven travel planning accessible and efficient** for everyo
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ed5bb0ea-4f52-4d48-a5ab-b0c90aea477c" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e7ce818f-84fa-46f2-a603-ab27ab3840d4" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5ae6b551-01a0-4f9e-b499-d0717bdf8bb7" />
+<img width="1902" height="953" alt="image" src="https://github.com/user-attachments/assets/bf560be0-9833-43d9-8a71-7092ef8d64ec" />
     
 
 ---
