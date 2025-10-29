@@ -177,19 +177,15 @@ async function generateAndShowItinerary(city, duration, interests, includeSnacks
       );
     
       // --- Fix YouTube links separately ---
+      // --- Always make YouTube a search link ---
       html = html.replace(
-        /(?:["']?youtube["']?|YouTube)\s*[:=]?\s*["“”']?(https?:\/\/[^\s"“”']+|[^"“”'\n]+)["“”']?/gi,
+        /(?:["']?youtube["']?|YouTube)\s*[:=]?\s*["“”']?([^"“”'\n]+)["“”']?/gi,
         (m, val) => {
-          const clean = val.trim();
-          // If it's a URL, use it directly
-          if (/^https?:\/\//i.test(clean)) {
-            return `<a href="${clean}" target="_blank">▶️ Watch on YouTube</a>`;
-          }
-          // Otherwise, treat as a search term
-          const query = encodeURIComponent(clean);
+          const query = encodeURIComponent(val.trim());
           return `<a href="https://www.youtube.com/results?search_query=${query}" target="_blank">▶️ Watch on YouTube</a>`;
         }
       );
+
     
       return html;
     }
@@ -206,7 +202,6 @@ async function generateAndShowItinerary(city, duration, interests, includeSnacks
     alert("Failed to generate itinerary. Check console for errors.");
   }
 }
-
 
 // send itinerary via EmailJS to logged-in user
 function sendItineraryToMyEmail() {
