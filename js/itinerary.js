@@ -3,9 +3,9 @@
 // Also initializes EmailJS for sending the itinerary to current user.
 // Replace the placeholders below with your keys.
 
-const EMAILJS_PUBLIC_KEY = "REPLACE_EMAILJS_PUBLIC";  // EmailJS public key
-const EMAILJS_SERVICE_ID = "REPLACE_EMAILJS_SERVICE"; // EmailJS service id (e.g., voyage_aid_ai)
-const EMAILJS_TEMPLATE_ID = "REPLACE_EMAILJS_TEMPLATE"; // EmailJS template id
+const EMAILJS_PUBLIC_KEY = "Zdqjoa0jGxrvUr1_z";  // EmailJS public key
+const EMAILJS_SERVICE_ID = "voyage_aid_ai"; // EmailJS service id (e.g., voyage_aid_ai)
+const EMAILJS_TEMPLATE_ID = "template_g2345nv"; // EmailJS template id
 
 // init EmailJS safely if present
 function initEmailJS() {
@@ -21,7 +21,7 @@ initEmailJS();
 // --- New OpenRouter API version ---
 // Make sure to create your key at https://openrouter.ai/settings/keys
 
-const OPENROUTER_API_KEY = "YOUR_KEY_HERE";
+const OPENROUTER_API_KEY = "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";
 // Generates plain-text itinerary from OpenRouter
 async function generateItinerary(city, days, preferences) {
   // days is expected as readable text: "2 days" or "1 day" etc.
@@ -61,6 +61,7 @@ async function generateItinerary(city, days, preferences) {
     return null;
   }
 }
+
 
 // build prompt to get JSON array output
 function buildPrompt(city, duration, interests, includeSnacks) {
@@ -105,6 +106,14 @@ function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','
 // primary function called by itinerary.html
 async function generateAndShowItinerary(city, duration, interests, includeSnacks) {
   try {
+        const container = document.getElementById('itinerary-body');
+        container.innerHTML = `
+          <div class="loading">
+            <div class="spinner"></div>
+            <p>Creating your AI itinerary... please wait ✨</p>
+          </div>
+        `;
+
     // Build prompt & call OpenRouter generator
     const aiText = await generateItinerary(city, duration, interests);
     if (!aiText) {
@@ -142,31 +151,52 @@ async function generateAndShowItinerary(city, duration, interests, includeSnacks
       return;
     }
 
-    // If parsed not available, still attempt to split the plain text into simple stops (best-effort)
-    // Show raw AI output (readable)
-    const container = document.getElementById('itinerary-body');
     // --- Convert markdown-ish AI text into readable HTML ---
     function markdownToHtml(md) {
-      return md
-        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-        .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/gim, '<em>$1</em>')
-        .replace(/`(.*?)`/gim, '<code>$1</code>')
-        .replace(/^- (.*$)/gim, '<li>$1</li>')
-        .replace(/\n<li>/gim, '<ul><li>').replace(/<\/li>\n(?!<li>)/gim, '</li></ul>')
-        .replace(/\n/gim, '<br>')
-        .replace(
-          /Maps Query:?["“”']?([^"“”'\n]+)["“”']?/gi,
-          '<a href="https://www.google.com/maps/search/$1" target="_blank">🗺️ $1</a>'
-        )
-        .replace(
-          /YouTube:?["“”']?([^"“”'\n]+)["“”']?/gi,
-          '<a href="https://www.youtube.com/results?search_query=$1" target="_blank">▶️ $1</a>'
-        );
+      let html = md
+        .replace(/```json/g, "<pre class='json-block'>")
+        .replace(/```/g, "</pre>")
+        .replace(/^### (.*$)/gim, "<h3>$1</h3>")
+        .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+        .replace(/^# (.*$)/gim, "<h1>$1</h1>")
+        .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
+        .replace(/\*(.*?)\*/gim, "<em>$1</em>")
+        .replace(/^- (.*$)/gim, "<li>$1</li>")
+        .replace(/\n<li>/gim, "<ul><li>")
+        .replace(/<\/li>\n(?!<li>)/gim, "</li></ul>")
+        .replace(/\n/gim, "<br>");
+
+      // --- Fix YouTube links ---
+      // Matches either a full URL or a text query after 'YouTube' or 'youtube'
+      html = html.replace(
+        /(YouTube|youtube)\s*[:=]?\s*["“”']?(https?:\/\/[^\s"“”']+|[^"“”'\n]+)["“”']?/gi,
+        (match, label, value) => {
+          // if it's already a URL, use it directly
+          if (value.startsWith("http")) {
+            return `<a href="${value.trim()}" target="_blank">▶️ Watch on YouTube</a>`;
+          }
+          // otherwise treat it as a search term
+          const query = encodeURIComponent(value.trim());
+          return `<a href="https://www.youtube.com/results?search_query=${query}" target="_blank">▶️ Watch on YouTube</a>`;
+        }
+      );
+
+      // --- Fix Maps links ---
+      // Handles both 'maps_query' and 'Maps Query'
+      html = html.replace(
+        /(maps_query|Maps Query)\s*[:=]?\s*["“”']?([^"“”'\n]+)["“”']?/gi,
+        (match, label, value) => {
+          const query = encodeURIComponent(value.trim());
+          return `<a href="https://www.google.com/maps/search/${query}" target="_blank">🗺️ View on Maps</a>`;
+        }
+      );
+
+      return html;
     }
+
+
     container.innerHTML = `<div class="markdown">${markdownToHtml(aiText)}</div>`;
+
     // also save raw text
     localStorage.setItem('voyage_last_itinerary', JSON.stringify({ raw: aiText }));
     console.log("Rendered AI plain text itinerary.");
