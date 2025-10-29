@@ -1,110 +1,97 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+/* css/style.css
+   Gradient Modern + Frosted Glass combination
+   Paste this into css/style.css
+*/
 
-body {
-  margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root{
+  --bg1: #f7fbff;
+  --accent1: linear-gradient(135deg,#FFD3B6 0%, #A8E6CF 50%, #DCE3FF 100%);
+  --card-bg: rgba(255,255,255,0.6);
+  --glass-blur: 8px;
+  --muted: #6b7280;
+  --primary: #6DA8FF;
+  --cta: linear-gradient(90deg,#7bdcf6,#60a5fa);
+  --shadow: 0 8px 30px rgba(2,6,23,0.08);
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #A8E6CF, #DCE3FF);
-  color: #333;
-  overflow-x: hidden;
 }
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 50px;
-  background: rgba(255,255,255,0.4);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg1);color:#0f1724;}
+
+/* NAV */
+.nav{
+  display:flex;justify-content:space-between;align-items:center;padding:18px 28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.35));
+  backdrop-filter: blur(var(--glass-blur)); position:sticky;top:0;z-index:50;
+}
+.brand{font-weight:700;font-size:18px}
+.nav-links a{margin-left:14px;text-decoration:none;color:#0f1724}
+.btn{padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(15,23,36,0.06)}
+.btn.ghost{background:transparent}
+.btn-primary{padding:10px 16px;border-radius:12px;background:var(--cta);color:#032; border:0; font-weight:600; box-shadow: var(--shadow)}
+.btn-primary:hover{transform:translateY(-2px);transition:all .18s}
+
+/* hero */
+.hero{display:flex;align-items:center;justify-content:center;min-height:60vh;position:relative;padding:40px}
+.hero-card{max-width:920px;padding:40px;border-radius:18px;background:var(--card-bg);backdrop-filter: blur(12px);box-shadow:var(--shadow)}
+.hero h1{margin:0 0 10px;font-size:32px}
+.hero p{margin:0 0 18px;color:var(--muted)}
+.hero-ctas a{margin-right:8px}
+
+/* cards */
+.container{max-width:1100px;margin:28px auto;padding:0 18px}
+.card{background:var(--card-bg);border-radius:14px;padding:20px;box-shadow:var(--shadow);backdrop-filter: blur(var(--glass-blur));}
+
+/* forms */
+.auth-page{display:flex;align-items:center;justify-content:center;min-height:62vh;padding:20px}
+.auth-card{max-width:420px;text-align:left}
+.field{display:block;margin:12px 0}
+.field span{display:block;margin-bottom:8px;font-weight:600}
+input[type="text"],input[type="email"],input[type="password"],select{
+  width:100%;padding:10px;border-radius:10px;border:1px solid rgba(15,23,36,0.06);background:rgba(255,255,255,0.85)
 }
 
-.logo {
-  font-weight: 700;
-  color: #333;
-}
+/* planner specific */
+.planner-card .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.9);border:1px solid rgba(15,23,36,0.04)}
+.chip input{margin-right:8px}
 
-.nav-links a {
-  margin: 0 15px;
-  text-decoration: none;
-  color: #333;
-}
+/* fancy checkbox (modern look) */
+.fancy-checkbox{appearance:none;width:16px;height:16px;border-radius:4px;border:2px solid rgba(15,23,36,0.12);background:linear-gradient(180deg,#fff,#fff);position:relative;vertical-align:middle;margin-right:8px;cursor:pointer}
+.fancy-checkbox:checked{background:linear-gradient(90deg,#7bdcf6,#60a5fa);border:none}
+.fancy-checkbox:checked::after{content:"";position:absolute;left:3px;top:0; width:6px;height:10px;border:2px solid white;border-top:0;border-left:0;transform:rotate(45deg)}
 
-.btn, .btn-primary {
-  padding: 10px 20px;
-  border-radius: 25px;
-  text-decoration: none;
-  color: white;
-  background-color: #FFAAA5;
-  border: none;
-  transition: 0.3s;
-  cursor: pointer;
-}
+/* switch for snacks */
+.switch{position:relative;display:inline-block;width:46px;height:28px}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:rgba(15,23,36,0.06);transition:.2s;border-radius:28px}
+.slider:before{position:absolute;content:"";height:22px;width:22px;left:3px;top:3px;background:white;border-radius:50%;transition:.2s}
+.switch input:checked + .slider{background:linear-gradient(90deg,#7bdcf6,#60a5fa)}
+.switch input:checked + .slider:before{transform:translateX(18px)}
 
-.btn-primary:hover {
-  background-color: #FFD3B6;
-  color: #333;
-}
+/* itinerary */
+.itinerary-body .it-stop{padding:12px;border-radius:10px;margin-bottom:10px;background:rgba(255,255,255,0.85);display:flex;justify-content:space-between;align-items:center}
+.it-top{display:flex;gap:12px;align-items:center}
+.it-time{font-weight:700;color:#1d2939;width:70px}
+.it-title{margin:0;font-size:16px}
+.it-links a{margin-right:8px;color:var(--primary);text-decoration:none}
+.top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 
-.hero {
-  text-align: center;
-  padding: 120px 20px;
-  position: relative;
-  z-index: 1;
-}
+/* small */
+.muted{color:var(--muted);font-size:13px}
 
-.hero h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-}
+/* blobs */
+.bg-blobs .blob{position:absolute;filter:blur(70px);opacity:0.7;mix-blend-mode:screen;border-radius:50%}
+.bg-blobs .b1{width:340px;height:340px;background:rgba(255,170,165,0.8);left:-60px;top:40px}
+.bg-blobs .b2{width:300px;height:300px;background:rgba(168,230,207,0.85);right:-80px;top:120px}
+.bg-blobs .b3{width:220px;height:220px;background:rgba(255,211,182,0.9);left:40%;top:220px}
 
-.hero p {
-  max-width: 600px;
-  margin: 0 auto 20px;
-}
-
-.card {
-  background: rgba(255,255,255,0.5);
-  backdrop-filter: blur(12px);
-  padding: 30px;
-  border-radius: 25px;
-  max-width: 400px;
-  margin: auto;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.auth-container, .planner-container, .itinerary-container {
-  padding: 100px 20px;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-
-.checkbox-group label {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.6;
-  animation: float 10s infinite ease-in-out;
-}
-
-.blob1 { width: 300px; height: 300px; background: #FFAAA5; top: 10%; left: -10%; }
-.blob2 { width: 250px; height: 250px; background: #A8E6CF; bottom: 10%; right: -10%; }
-.blob3 { width: 200px; height: 200px; background: #FFD3B6; top: 60%; left: 40%; }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+/* responsiveness */
+@media (max-width:800px){
+  .hero{padding:30px}
+  .hero-card{padding:24px}
+  .nav{padding:12px}
+  .it-top{flex-direction:column;align-items:flex-start}
 }
