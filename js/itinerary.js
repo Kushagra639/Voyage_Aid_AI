@@ -25,7 +25,7 @@ async function callHF(prompt) {
     return null;
   }
   const model = "gpt2"; // replace with a better model on HF if available (or a small chat model)
-  const res = await fetch(`https://api-inference.huggingface.co/models/${model}`, {
+  const res = await fetch(`https://router.huggingface.co/hf-inference/models/${model}`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${HF_API_KEY}`, 'Content-Type':'application/json' },
     body: JSON.stringify({ inputs: prompt, options:{wait_for_model:true} })
