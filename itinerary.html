@@ -1,59 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Voyage Aid AI — Itinerary</title>
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    /* minimal local styles to ensure itinerary looks good even if css/style.css differs */
-    .itinerary-container { padding: 36px; max-width: 900px; margin: 24px auto; }
-    #itinerary-body .card { margin: 12px 0; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.6); }
-    .it-top { display:flex; gap:12px; align-items:center; }
-    .it-time { width:70px; font-weight:700; color:#333; }
-    .it-title { margin:0; font-size:18px; color:#111; }
-    .it-links a, .it-links button { margin-right:8px; }
-    .controls { display:flex; gap:10px; margin-top:12px; }
-  </style>
 </head>
 <body>
-  <nav>
-    <h2 class="logo">Voyage Aid AI</h2>
-    <div class="nav-links">
+  <header class="nav">
+    <div class="brand">Voyage Aid AI</div>
+    <nav class="nav-links">
       <a href="index.html">Home</a>
-      <a href="planner.html">Plan Another</a>
-    </div>
-  </nav>
+      <a href="planner.html">Plan another</a>
+      <a id="logout-link" href="#">Logout</a>
+    </nav>
+  </header>
 
-  <main class="itinerary-container">
-    <h1>Your AI-Curated Itinerary</h1>
+  <main class="container">
+    <section class="card itinerary-card">
+      <div class="top-row">
+        <div>
+          <h2 id="it-title">Your Itinerary</h2>
+          <div class="muted">Logged in as <span class="current-user-email"></span></div>
+        </div>
+        <div>
+          <button class="btn" id="send-email-btn">Send to my email</button>
+        </div>
+      </div>
 
-    <div style="margin-bottom:12px;">
-      Logged in as: <span class="current-user-email"></span>
-      <button onclick="logout()" style="margin-left:12px;">Logout</button>
-    </div>
+      <div id="itinerary-body" class="itinerary-body">
+        <p class="muted">No itinerary yet — generate one from the Planner, or use the controls there.</p>
+      </div>
 
-    <!-- Controls -->
-    <div class="controls">
-      <input id="city-input" placeholder="Enter city (e.g., Paris)" style="flex:1;padding:8px;border-radius:8px;border:1px solid #ccc" />
-      <select id="duration-select" class="duration-select"></select>
-      <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="snack-checkbox" class="snack-checkbox" /> Include snacks</label>
-      <button class="btn-primary" onclick="startGenerate()">Generate</button>
-    </div>
-
-    <!-- Itinerary body -->
-    <div id="itinerary-body" style="margin-top:18px;">
-      <p>Use the controls above to generate an itinerary. The AI will create a day plan; you may skip stops or send the full plan to your account email.</p>
-    </div>
-
-    <div style="margin-top:16px;">
-      <button class="btn" onclick="sendItineraryToMyEmail()">Send to my email</button>
-    </div>
-
-    <div id="map-output" style="margin-top:18px;"></div>
+      <div id="map-output" style="margin-top:16px;"></div>
+    </section>
   </main>
 
-  <!-- Leaflet for optional map rendering (pure client, free) -->
+  <!-- Leaflet (maps) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -61,49 +44,40 @@
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
   <!-- app scripts -->
+  <script src="js/auth.js"></script>
   <script src="js/map.js"></script>
   <script src="js/itinerary.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/auth.js"></script>
 
   <script>
-    // small binding helper used by the Generate button
-    function startGenerate() {
-      const city = document.getElementById("city-input").value.trim();
-      const durationLabel = document.getElementById("duration-select").value;
-      const interests = []; // optional: read from page if you have interest checkboxes
-      const includeSnacks = document.getElementById("snack-checkbox").checked;
-      if (!city) return alert("Enter a city to generate an itinerary.");
-      generateAndShowItinerary(city, durationLabel, interests, includeSnacks);
-      // also attempt to populate map output: geocode + show map link
-      geocodePlace(city).then(c=>{
-        if (!c) return;
-        const coords = [parseFloat(c.lat), parseFloat(c.lon)];
-        // inject a simple Leaflet map
-        const mapDivId = "leaflet-mini-map";
-        // remove old map if any
-        const old = document.getElementById(mapDivId);
-        if (old) old.remove();
-        const d = document.createElement("div");
-        d.id = mapDivId; d.style.height = "320px"; d.style.marginTop = "10px";
-        document.getElementById("map-output").appendChild(d);
-        const map = L.map(mapDivId).setView(coords, 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
-        L.marker(coords).addTo(map).bindPopup(c.name || city).openPopup();
-      }).catch(()=>{});
-    }
+    // Page boot
+    document.addEventListener('DOMContentLoaded', async ()=>{
+      const user = getCurrentUserEmail();
+      if (!user) {
+        // force to login
+        alert("Please login to view your itinerary.");
+        window.location.href = "login.html";
+        return;
+      }
+      document.querySelectorAll('.current-user-email').forEach(e=> e.textContent = user);
+      document.getElementById('logout-link').addEventListener('click', ()=>{ logout(); });
 
-    // set current user email in page
-    document.addEventListener("DOMContentLoaded", () => {
-      const cu = localStorage.getItem("voyage_current");
-      if (cu) document.querySelectorAll(".current-user-email").forEach(el => el.textContent = cu);
-      // initialize duration dropdowns from main.js binding
-      // bind snack checkbox ID expected by main.js
-      const snack = document.getElementById("snack-checkbox");
-      snack.classList.add("snack-checkbox");
+      // load trip saved from planner
+      const tripJSON = localStorage.getItem('voyage_trip');
+      if (!tripJSON) {
+        document.getElementById('itinerary-body').innerHTML = '<p class="muted">No trip found. Go to Planner to create one.</p>';
+        return;
+      }
+      const trip = JSON.parse(tripJSON);
+      // call generator (itinerary.js provides generateAndShowItinerary)
+      await generateAndShowItinerary(trip.city, trip.duration, trip.interests || [], trip.snacks);
     });
+
+    // hook send email (requires EmailJS keys inside js/itinerary.js)
+    document.getElementById('send-email-btn').addEventListener('click', ()=> {
+      sendItineraryToMyEmail();
+    });
+
   </script>
 </body>
 </html>
