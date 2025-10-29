@@ -153,6 +153,7 @@ async function generateAndShowItinerary(city, duration, interests, includeSnacks
 
     // --- Convert markdown-ish AI text into readable HTML ---
     function markdownToHtml(md) {
+      // Convert markdown basics first
       let html = md
         .replace(/```json/g, "<pre class='json-block'>")
         .replace(/```/g, "</pre>")
@@ -165,34 +166,34 @@ async function generateAndShowItinerary(city, duration, interests, includeSnacks
         .replace(/\n<li>/gim, "<ul><li>")
         .replace(/<\/li>\n(?!<li>)/gim, "</li></ul>")
         .replace(/\n/gim, "<br>");
-
-      // --- Fix YouTube links ---
-      // Matches either a full URL or a text query after 'YouTube' or 'youtube'
+    
+      // --- Fix Maps Query before touching YouTube ---
       html = html.replace(
-        /(YouTube|youtube)\s*[:=]?\s*["“”']?(https?:\/\/[^\s"“”']+|[^"“”'\n]+)["“”']?/gi,
-        (match, label, value) => {
-          // if it's already a URL, use it directly
-          if (value.startsWith("http")) {
-            return `<a href="${value.trim()}" target="_blank">▶️ Watch on YouTube</a>`;
-          }
-          // otherwise treat it as a search term
-          const query = encodeURIComponent(value.trim());
-          return `<a href="https://www.youtube.com/results?search_query=${query}" target="_blank">▶️ Watch on YouTube</a>`;
-        }
-      );
-
-      // --- Fix Maps links ---
-      // Handles both 'maps_query' and 'Maps Query'
-      html = html.replace(
-        /(maps_query|Maps Query)\s*[:=]?\s*["“”']?([^"“”'\n]+)["“”']?/gi,
-        (match, label, value) => {
-          const query = encodeURIComponent(value.trim());
+        /(?:["']?maps_query["']?|Maps Query)\s*[:=]?\s*["“”']?([^"“”'\n]+)["“”']?/gi,
+        (m, val) => {
+          const query = encodeURIComponent(val.trim());
           return `<a href="https://www.google.com/maps/search/${query}" target="_blank">🗺️ View on Maps</a>`;
         }
       );
-
+    
+      // --- Fix YouTube links separately ---
+      html = html.replace(
+        /(?:["']?youtube["']?|YouTube)\s*[:=]?\s*["“”']?(https?:\/\/[^\s"“”']+|[^"“”'\n]+)["“”']?/gi,
+        (m, val) => {
+          const clean = val.trim();
+          // If it's a URL, use it directly
+          if (/^https?:\/\//i.test(clean)) {
+            return `<a href="${clean}" target="_blank">▶️ Watch on YouTube</a>`;
+          }
+          // Otherwise, treat as a search term
+          const query = encodeURIComponent(clean);
+          return `<a href="https://www.youtube.com/results?search_query=${query}" target="_blank">▶️ Watch on YouTube</a>`;
+        }
+      );
+    
       return html;
     }
+
 
 
     container.innerHTML = `<div class="markdown">${markdownToHtml(aiText)}</div>`;
