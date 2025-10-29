@@ -3,9 +3,9 @@
 // Also initializes EmailJS for sending the itinerary to current user.
 // Replace the placeholders below with your keys.
 
-const EMAILJS_PUBLIC_KEY = "Zdqjoa0jGxrvUr1_z";  // EmailJS public key
-const EMAILJS_SERVICE_ID = "voyage_aid_ai"; // EmailJS service id (e.g., voyage_aid_ai)
-const EMAILJS_TEMPLATE_ID = "template_g2345nv"; // EmailJS template id
+const EMAILJS_PUBLIC_KEY = "EmailJS_Public_Key";  // EmailJS public key
+const EMAILJS_SERVICE_ID = "EmailJS_Service_ID"; // EmailJS service id
+const EMAILJS_TEMPLATE_ID = "EmailJS_Template_ID"; // EmailJS template id
 
 // init EmailJS safely if present
 function initEmailJS() {
@@ -21,7 +21,7 @@ initEmailJS();
 // --- New OpenRouter API version ---
 // Make sure to create your key at https://openrouter.ai/settings/keys
 
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = "OpenRouter_API_Key"; // Replace with your actual API key
 // Generates plain-text itinerary from OpenRouter
 async function generateItinerary(city, days, preferences) {
   // days is expected as readable text: "2 days" or "1 day" etc.
