@@ -1,3 +1,6 @@
+| [English 🇬🇧](/README.md) | [Español 🇪🇸](/ES/README_ES.md) | [Italiano 🇮🇹](/IT/README_IT.md) | [Deutsch 🇩🇪](/DE/README_DE.md) | [Nederlands 🇳🇱](/NL/README_NL.md) | [Русский 🇷🇺](/RU/README_RU.md) | [日本語 🇯🇵](/JP/README_JP.md) |
+|-|-|-|-|-|-|-|
+
 # 🌍 Voyage Aid AI  
 ### *Votre organisateur de voyage personnel basé sur l'IA*  
 
@@ -102,6 +105,6 @@ L'objectif : rendre la planification de voyages assistée par l'IA **accessible 
 
 ## 💌 Contact  
 
-For questions or collaborations:  
+Pour toute question ou collaboration :  
 📧 kushagraaggarwal060309@gmail.com  
 🌐 [LinkedIn](https://www.linkedin.com/in/kushagraaggarwal639/)
