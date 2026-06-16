@@ -1,3 +1,6 @@
+| [Français 🇫🇷](/FR/README_FR.md) | [Español 🇪🇸](/ES/README_ES.md) | [English 🇬🇧](/README.md) | [Deutsch 🇩🇪](/DE/README_DE.md) | [Nederlands 🇳🇱](/NL/README_NL.md) | [Русский 🇷🇺](/RU/README_RU.md) | [日本語 🇯🇵](/JP/README_JP.md) |
+|-|-|-|-|-|-|-|
+
 # 🌍 Voyage Aid AI  
 ### *Il tuo pianificatore di viaggi personale basato sull'IA*  
 
