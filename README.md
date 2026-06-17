@@ -12,7 +12,7 @@ It leverages **AI**, **Google Maps**, and **YouTube** to curate smart, efficient
 ## 🚀 Features  
 
 ✅ **AI-Powered Itineraries** – Generates custom travel plans based on user preferences and available time.  
-✅ **Google Maps Integration** – Provides directions, travel times, and location links directly in the itinerary.  
+✅ **Maps Integration** – Provides directions, travel times, and location links directly in the itinerary.  
 ✅ **YouTube Integration** – Attaches top-rated travel vlogs for each destination.  
 ✅ **Smart Food Planning** – Automatically includes breakfast, lunch, and dinner breaks; optional snack breaks available.  
 ✅ **User Accounts** – Login or sign up to save and receive itineraries by email.  
