@@ -6,7 +6,7 @@
 
 Voyage Aid AI est un générateur intelligent d'itinéraires de voyage qui crée des **programmes de voyage personnalisés** pour les utilisateurs en fonction de leurs préférences, de leur temps et de leur destination.
 
-Il s'appuie sur l'**IA**, **Google Maps** et **YouTube** pour élaborer des itinéraires de voyage intelligents, efficaces et passionnants, incluant des pauses gourmandes, des suggestions d'hôtels et des pépites locales méconnues.
+Il s'appuie sur l'**IA**, **Maps** et **YouTube** pour élaborer des itinéraires de voyage intelligents, efficaces et passionnants, incluant des pauses gourmandes, des suggestions d'hôtels et des pépites locales méconnues.
 
 ---
 
@@ -37,7 +37,7 @@ Il s'appuie sur l'**IA**, **Google Maps** et **YouTube** pour élaborer des itin
    Choisissez la ville, la durée du séjour et vos centres d'intérêt (histoire, gastronomie, aventure, etc.).  
 
 3. **Génération d'itinéraires par IA**  
-   Voyage Aid AI utilise des données pré-intégrées et des API d'IA gratuites (telles qu'OpenAI GPT-mini ou Hugging Face) pour générer des itinéraires de voyage optimisés.  
+   Voyage Aid AI utilise des données pré-intégrées et des API d'IA gratuites pour générer des itinéraires de voyage optimisés.  
 
 4. **Explorer et modifier**  
    Les utilisateurs peuvent consulter des itinéraires, des vidéos YouTube et les commodités à proximité, et même remplacer les lieux qu'ils préfèrent éviter.  
@@ -108,3 +108,5 @@ L'objectif : rendre la planification de voyages assistée par l'IA **accessible 
 Pour toute question ou collaboration :  
 📧 kushagraaggarwal060309@gmail.com  
 🌐 [LinkedIn](https://www.linkedin.com/in/kushagraaggarwal639/)
+📸 [Instagram](https://www.instagram.com/kushagraaggarwal639)
+
