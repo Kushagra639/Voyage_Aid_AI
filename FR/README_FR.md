@@ -64,7 +64,7 @@ Il s'appuie sur l'**IA**, **Maps** et **YouTube** pour élaborer des itinéraire
 
 | Objectif  | API |
 |----------|-----|
-| Cartes et itinéraires | [OpenTrip Map] and [Open Route Service] |
+| Cartes et itinéraires | [OpenTrip Map] et [Open Route Service] |
 | Envoi d'e-mails | [EmailJS](https://www.emailjs.com/) |
 | Génération de texte par l'IA | [OpenRouter](https://www.openrouter.ai/) |
 
