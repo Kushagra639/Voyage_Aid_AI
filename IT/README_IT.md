@@ -5,14 +5,14 @@
 ### *Il tuo pianificatore di viaggi personale basato sull'IA*  
 
 Voyage Aid AI è un generatore intelligente di itinerari di viaggio che crea **piani di viaggio personalizzati** per gli utenti in base alle loro preferenze, alle tempistiche e alla destinazione.  
-Sfrutta l'**IA**, **Google Maps** e **YouTube** per creare itinerari di viaggio intelligenti, efficienti e appassionanti, includendo soste gastronomiche, suggerimenti per hotel e gemme locali poco conosciute.  
+Sfrutta l'**IA**, **Maps** e **YouTube** per creare itinerari di viaggio intelligenti, efficienti e appassionanti, includendo soste gastronomiche, suggerimenti per hotel e gemme locali poco conosciute.  
 
 ---
 
 ## 🚀 Funzionalità  
 
 ✅ **Itinerari basati sull'IA** – Genera itinerari di viaggio personalizzati in base alle preferenze dell'utente e al tempo disponibile.  
-✅ **Integrazione con Google Maps** – Fornisce indicazioni, tempi di percorrenza e link alla posizione direttamente nell'itinerario.  
+✅ **Integrazione con Maps** – Fornisce indicazioni, tempi di percorrenza e link alla posizione direttamente nell'itinerario.  
 ✅ **Integrazione con YouTube** – Include i vlog di viaggio più apprezzati per ogni destinazione.  
 ✅ **Pianificazione intelligente dei pasti** – Include automaticamente le pause per colazione, pranzo e cena; sono disponibili pause facoltative per lo spuntino.  
 ✅ **Account utente** – Accedi o registrati per salvare e ricevere gli itinerari via e-mail.  
@@ -30,7 +30,7 @@ Sfrutta l'**IA**, **Google Maps** e **YouTube** per creare itinerari di viaggio 
    Scegli la città, la durata del viaggio e gli interessi di viaggio (storia, gastronomia, avventura, ecc.).  
 
 3. **Generazione di itinerari tramite IA**  
-   Voyage Aid AI utilizza dati precaricati e API di IA gratuite (come OpenAI GPT-mini o Hugging Face) per generare piani di viaggio ottimizzati.  
+   Voyage Aid AI utilizza dati precaricati e API di IA gratuite per generare piani di viaggio ottimizzati.  
 
 4. **Esplora e modifica**  
    Gli utenti possono visualizzare percorsi, video di YouTube e servizi nelle vicinanze, e persino sostituire le tappe che preferirebbero saltare.  
@@ -101,3 +101,5 @@ Con l'obiettivo di rendere la **pianificazione dei viaggi basata sull'IA accessi
 Per domande o collaborazioni:  
 📧 kushagraaggarwal060309@gmail.com  
 🌐 [LinkedIn](https://www.linkedin.com/in/kushagraaggarwal639/)
+📸 [Instagram](https://www.instagram.com/kushagraaggarwal639)
+
