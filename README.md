@@ -5,7 +5,7 @@
 ### *Your Personal AI-Powered Travel Planner*  
 
 Voyage Aid AI is an intelligent travel itinerary generator that creates **personalized travel plans** for users based on their preferences, time, and destination.  
-It leverages **AI**, **Google Maps**, and **YouTube** to curate smart, efficient, and exciting travel routes — including food breaks, hotel suggestions, and underrated local gems.  
+It leverages **AI**, **Maps**, and **YouTube** to curate smart, efficient, and exciting travel routes — including food breaks, hotel suggestions, and underrated local gems.  
 
 ---
 
@@ -30,7 +30,7 @@ It leverages **AI**, **Google Maps**, and **YouTube** to curate smart, efficient
    Choose city, trip duration, and travel interests (history, food, adventure, etc.).  
 
 3. **AI Itinerary Generation**  
-   Voyage Aid AI uses pre-fed data and free AI APIs (like OpenAI GPT-mini or Hugging Face) to generate optimized travel plans.  
+   Voyage Aid AI uses pre-fed data and free AI APIs to generate optimized travel plans.  
 
 4. **Explore & Modify**  
    Users can view routes, YouTube videos, nearby amenities, and even swap out places they’d prefer to skip.  
@@ -101,3 +101,4 @@ Aiming to make **AI-driven travel planning accessible and efficient** for everyo
 For questions or collaborations:  
 📧 kushagraaggarwal060309@gmail.com  
 🌐 [LinkedIn](https://www.linkedin.com/in/kushagraaggarwal639/)
+📸 [Instagram](https://www.instagram.com/kushagraaggarwal639)
