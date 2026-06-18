@@ -31,7 +31,7 @@ Aprovecha la **IA**, **Maps** y **YouTube** para diseñar rutas de viaje intelig
    Elige la ciudad, la duración del viaje y tus intereses (historia, gastronomía, aventura, etc.).  
 
 3. **Generación de itinerarios con IA**  
-   Voyage Aid AI utiliza datos previamente cargados y API de IA gratuitas (como OpenAI GPT-mini o Hugging Face) para generar planes de viaje optimizados.  
+   Voyage Aid AI utiliza datos previamente cargados y API de IA gratuitas para generar planes de viaje optimizados.  
 
 4. **Explorar y modificar**  
    Los usuarios pueden ver rutas, vídeos de YouTube y servicios cercanos, e incluso sustituir aquellos lugares que prefieran omitir.  
