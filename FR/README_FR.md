@@ -14,7 +14,7 @@ Il s'appuie sur l'**IA**, **Maps** et **YouTube** pour élaborer des itinéraire
 
   ✅ **Itinéraires optimisés par l'IA** – Génère des itinéraires de voyage personnalisés en fonction des préférences de l'utilisateur et du temps disponible.  
   
-  ✅ **Intégration de Google Maps** – Fournit des itinéraires, des temps de trajet et des liens de localisation directement dans l'itinéraire.  
+  ✅ **Intégration de Maps** – Fournit des itinéraires, des temps de trajet et des liens de localisation directement dans l'itinéraire.  
   
   ✅ **Intégration de YouTube** – Inclut des vlogs de voyage très bien notés pour chaque destination.  
   
