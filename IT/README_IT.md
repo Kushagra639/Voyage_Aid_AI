@@ -45,7 +45,7 @@ Sfrutta l'**IA**, **Maps** e **YouTube** per creare itinerari di viaggio intelli
 | Strato | Tecnologia |
 |-------|-------------|
 | **Frontend** | HTML, CSS, JavaScript |
-| **Stilizzazione** | CSS3, Pastel Gradients, Glassmorphism |
+| **Stilizzazione** | CSS3, Sfumature pastello, Glassmorfismo |
 | **Motore di IA** | OpenRouter API |
 | **Mappe e percorsi** | Open Route Service + OpenTrip Map |
 | **Invio di e-mail** | EmailJS |
