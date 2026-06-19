@@ -46,7 +46,7 @@ Aprovecha la **IA**, **Maps** y **YouTube** para diseñar rutas de viaje intelig
 | Capa | Tecnología |
 |-------|-------------|
 | **Frontend** | HTML, CSS, JavaScript |
-| **Estilo** | CSS3, Pastel Gradients, Glassmorphism |
+| **Estilo** | CSS3, Degradados pastel, Glassmorfismo |
 | **Motor de IA** | OpenRouter API |
 | **Mapas y rutas** | Open Route Service + OpenTrip Map |
 | **Envío de correos electrónicos** | EmailJS |
