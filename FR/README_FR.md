@@ -52,7 +52,7 @@ Il s'appuie sur l'**IA**, **Maps** et **YouTube** pour élaborer des itinéraire
 | Couche | Technologie |
 |-------|-------------|
 | **Front-end** | HTML, CSS, JavaScript |
-| **Stylisation** | CSS3, Pastel Gradients, Glassmorphism |
+| **Stylisation** | CSS3, Dégradés pastel, Glassmorphisme |
 | **Moteur d'IA** | OpenRouter API |
 | **Cartes et itinéraires** | Open Route Service + OpenTrip Map |
 | **Envoi d'e-mails** | EmailJS |
