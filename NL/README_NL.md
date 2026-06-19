@@ -45,7 +45,7 @@ Het maakt gebruik van **AI**, **Maps** en **YouTube** om slimme, efficiënte en 
 | Laag | Technologie |
 |-------|-------------|
 | **Frontend** | HTML, CSS, JavaScript |
-| **Styling** | CSS3, Pastel Gradients, Glassmorphism |
+| **Styling** | CSS3, Pastelkleurige kleurverlopen, Glassmorfisme |
 | **AI-engine** | OpenRouter API |
 | **Kaarten & routes** | Open Route Service + OpenTrip Map |
 | **E-mailverzending** | EmailJS |
