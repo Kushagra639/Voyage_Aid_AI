@@ -47,7 +47,7 @@ Es nutzt **KI**, **Maps** und **YouTube**, um intelligente, effiziente und spann
 | Schicht | Technologie |
 |-------|-------------|
 | **Frontend** | HTML, CSS, JavaScript |
-| **Styling** | CSS3, Pastel Gradients, Glassmorphism |
+| **Styling** | CSS3, Pastellverläufe, Glasmorphismus |
 | **KI-Engine** | OpenRouter API |
 | **Karten & Routen** | Open Route Service + OpenTrip Map |
 | **E-Mail-Versand** | EmailJS |
