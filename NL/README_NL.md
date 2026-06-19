@@ -57,7 +57,7 @@ Het maakt gebruik van **AI**, **Maps** en **YouTube** om slimme, efficiënte en 
 
 | Doel | API |
 |----------|-----|
-| Kaarten & routes | [OpenTrip Map] and [Open Route Service] |
+| Kaarten & routes | [OpenTrip Map] en [Open Route Service] |
 | E-mailverzending | [EmailJS](https://www.emailjs.com/) |
 | AI-tekstgeneratie | [OpenRouter](https://www.openrouter.ai/) |
 
