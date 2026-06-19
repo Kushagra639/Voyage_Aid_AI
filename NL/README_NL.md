@@ -85,7 +85,7 @@ Met als doel **AI-gestuurde reisplanning toegankelijk en efficiënt** te maken v
 
 ---
 
-## 📸 Preview  
+## 📸 Voorbeeld  
   
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3d0835b3-bff7-474d-a881-ef8960865d27" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ed5bb0ea-4f52-4d48-a5ab-b0c90aea477c" />
